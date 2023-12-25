@@ -24,13 +24,13 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: ${SERVICE_REGISTRY_URL:http://localhost:8761}/eureka
+      defaultZone: ${SERVICE_REGISTRY_URL}/eureka
   instance:
     prefer-ip-address: true
 
 app:
   env:
-    auth-service-base-url: ${AUTH_SERVICE_BASE_URL:http://localhost:9001}
+    auth-service-base-url: ${AUTH_SERVICE_BASE_URL}
     open-api-endpoints:
       - "/auth/sign-up"
       - "/auth/login"

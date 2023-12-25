@@ -60,10 +60,13 @@ class AuthenticationFilterTest {
 
     @Test
     fun `should apply filter if path is not secured`() {
+        val headers = LinkedMultiValueMap<String, String>()
+        headers.put("Authorization", listOf("authorization"))
+
         every { routeValidator.isSecured(any()) } returns true
         every { chain.filter(any()) } returns Mono.empty()
         every { exchange.request } returns request
-        every { request.headers } returns HttpHeaders()
+        every { request.headers } returns HttpHeaders(headers)
         every {
             webClientWrapper.get(
                 baseUrl = any(),
@@ -71,7 +74,7 @@ class AuthenticationFilterTest {
                 returnType = any<Class<*>>(),
                 headers = any()
             )
-        } returns Mono.just("")
+        } returns Mono.just(AuthDetails("userid"))
 
         authenticationFilter.apply(AuthenticationFilterConfig()).filter(exchange, chain).subscribe()
 
@@ -81,8 +84,8 @@ class AuthenticationFilterTest {
             webClientWrapper.get(
                 baseUrl = "http://auth-service",
                 path = "/auth/validate",
-                returnType = String::class.java,
-                headers = mapOf("Authorization" to "")
+                returnType = AuthDetails::class.java,
+                headers = mapOf("Authorization" to "authorization")
             )
         }
     }
@@ -90,7 +93,7 @@ class AuthenticationFilterTest {
     @Test
     fun `should give error if authentication failed`() {
         val response = mockk<ServerHttpResponse>()
-        val map: MultiValueMap<String, String> = LinkedMultiValueMap();
+        val map: MultiValueMap<String, String> = LinkedMultiValueMap()
         map.add("Authorization", "authorization")
 
         every { routeValidator.isSecured(any()) } returns true
@@ -115,7 +118,7 @@ class AuthenticationFilterTest {
             webClientWrapper.get(
                 baseUrl = "http://auth-service",
                 path = "/auth/validate",
-                returnType = String::class.java,
+                returnType = AuthDetails::class.java,
                 headers = mapOf("Authorization" to "authorization")
             )
             response.setStatusCode(HttpStatus.UNAUTHORIZED)
