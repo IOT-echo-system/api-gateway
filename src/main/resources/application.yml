@@ -35,5 +35,3 @@ app:
       - "/auth/sign-up"
       - "/auth/login"
       - "/auth/validate"
-
-

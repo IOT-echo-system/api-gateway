@@ -32,7 +32,7 @@ class AuthenticationFilter(
                 .onErrorResume {
                     val unAuthorizedException = UnAuthorizedException(
                         errorCode = "IOT-4000",
-                        errorMessage = "Authorized failure!"
+                        message = "Authorized failure!"
                     )
                     val response = exchange.response
 
