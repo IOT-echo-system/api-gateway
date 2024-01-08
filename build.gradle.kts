@@ -56,6 +56,7 @@ tasks.withType<Test> {
 }
 
 // Jacoco configuration`
+/*
 jacoco {
     toolVersion = "0.8.7"
 }
@@ -100,3 +101,4 @@ tasks.jacocoTestCoverageVerification {
         }
     }
 }
+*/

@@ -2,8 +2,8 @@ package com.shiviraj.iot.apigateway.filters
 
 import com.shiviraj.iot.apigateway.config.AppConfig
 import com.shiviraj.iot.apigateway.exception.UnAuthorizedException
-import com.shiviraj.iot.loggingstarter.logOnErrorResponse
-import com.shiviraj.iot.loggingstarter.logOnSuccessResponse
+import com.shiviraj.iot.loggingstarter.logOnError
+import com.shiviraj.iot.loggingstarter.logOnSuccess
 import com.shiviraj.iot.loggingstarter.serializer.DefaultSerializer.serialize
 import com.shiviraj.iot.webClient.WebClientWrapper
 import org.springframework.cloud.gateway.filter.GatewayFilter
@@ -24,11 +24,11 @@ class AuthenticationFilter(
     override fun apply(config: AuthenticationFilterConfig): GatewayFilter {
         return (GatewayFilter { exchange: ServerWebExchange, chain: GatewayFilterChain ->
             authorizeRequest(exchange)
+                .logOnSuccess(message = "Successfully authorized")
+                .logOnError(errorMessage = "Failed to authorize")
                 .flatMap {
                     chain.filter(exchange)
                 }
-                .logOnSuccessResponse(message = "Successfully authorized")
-                .logOnErrorResponse(errorMessage = "Failed to authorize")
                 .onErrorResume {
                     val unAuthorizedException = UnAuthorizedException(
                         errorCode = "IOT-4000",
