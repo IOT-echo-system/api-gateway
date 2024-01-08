@@ -35,3 +35,5 @@ app:
       - "/auth/sign-up"
       - "/auth/login"
       - "/auth/validate"
+      - "/auth/generate-otp"
+      - "/auth/validate-otp"
