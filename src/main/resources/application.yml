@@ -36,4 +36,4 @@ app:
       - "/auth/login"
       - "/auth/validate"
       - "/auth/generate-otp"
-      - "/auth/validate-otp"
+      - "/auth/verify-otp"
