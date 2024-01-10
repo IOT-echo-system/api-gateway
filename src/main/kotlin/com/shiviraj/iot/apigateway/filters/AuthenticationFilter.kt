@@ -4,6 +4,7 @@ import com.shiviraj.iot.apigateway.config.AppConfig
 import com.shiviraj.iot.apigateway.exception.UnAuthorizedException
 import com.shiviraj.iot.loggingstarter.logOnError
 import com.shiviraj.iot.loggingstarter.logOnSuccess
+import com.shiviraj.iot.loggingstarter.serializer.DefaultSerializer.deserialize
 import com.shiviraj.iot.loggingstarter.serializer.DefaultSerializer.serialize
 import com.shiviraj.iot.webClient.WebClientWrapper
 import org.springframework.cloud.gateway.filter.GatewayFilter
@@ -55,9 +56,10 @@ class AuthenticationFilter(
             webClientWrapper.get(
                 baseUrl = appConfig.authServiceBaseUrl,
                 path = "/auth/validate",
-                returnType = AuthDetails::class.java,
+                returnType = String::class.java,
                 headers = exchange.request.headers.mapValues { it.value.joinToString(",") }
             )
+                .map { deserialize(it, AuthDetails::class.java) }
         } else {
             Mono.just(AuthDetails(userId = "Unauthorized path"))
         }
