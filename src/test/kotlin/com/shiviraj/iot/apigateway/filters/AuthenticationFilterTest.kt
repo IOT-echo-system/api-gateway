@@ -44,52 +44,6 @@ class AuthenticationFilterTest {
         clearAllMocks()
     }
 
-//    @Test
-//    fun `should not apply filter if path is not secured`() {
-//        every { routeValidator.isSecured(any()) } returns false
-//        every { chain.filter(any()) } returns Mono.empty()
-//        every { exchange.request } returns request
-//
-//        authenticationFilter.apply(AuthenticationFilterConfig()).filter(exchange, chain).subscribe()
-//
-//        verify(exactly = 1) {
-//            routeValidator.isSecured(request)
-//            chain.filter(exchange)
-//        }
-//    }
-//
-//    @Test
-//    fun `should apply filter if path is not secured`() {
-//        val headers = LinkedMultiValueMap<String, String>()
-//        headers.put("Authorization", listOf("authorization"))
-//
-//        every { routeValidator.isSecured(any()) } returns true
-//        every { chain.filter(any()) } returns Mono.empty()
-//        every { exchange.request } returns request
-//        every { request.headers } returns HttpHeaders(headers)
-//        every {
-//            webClientWrapper.get(
-//                baseUrl = any(),
-//                path = any(),
-//                returnType = any<Class<*>>(),
-//                headers = any()
-//            )
-//        } returns Mono.just(AuthDetails("userid"))
-//
-//        authenticationFilter.apply(AuthenticationFilterConfig()).filter(exchange, chain).subscribe()
-//
-//        verify(exactly = 1) {
-//            routeValidator.isSecured(request)
-//            chain.filter(exchange)
-//            webClientWrapper.get(
-//                baseUrl = "http://auth-service",
-//                path = "/auth/validate",
-//                returnType = AuthDetails::class.java,
-//                headers = mapOf("Authorization" to "authorization")
-//            )
-//        }
-//    }
-
     @Test
     fun `should give error if authentication failed`() {
         val response = mockk<ServerHttpResponse>()
