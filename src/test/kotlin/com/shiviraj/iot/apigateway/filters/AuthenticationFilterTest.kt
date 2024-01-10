@@ -72,7 +72,7 @@ class AuthenticationFilterTest {
             webClientWrapper.get(
                 baseUrl = "http://auth-service",
                 path = "/auth/validate",
-                returnType = AuthDetails::class.java,
+                returnType = String::class.java,
                 headers = mapOf("Authorization" to "authorization")
             )
             response.setStatusCode(HttpStatus.UNAUTHORIZED)
