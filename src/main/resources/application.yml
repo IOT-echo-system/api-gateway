@@ -14,6 +14,13 @@ spring:
           filters:
             - AuthenticationFilter
 
+        - id: account-service
+          uri: lb://ACCOUNT-SERVICE
+          predicates:
+            - Path=/accounts/**
+          filters:
+            - AuthenticationFilter
+
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
