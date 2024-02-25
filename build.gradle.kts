@@ -22,6 +22,8 @@ repositories {
 dependencies {
     implementation(files("./libs/logging-starter-0.0.1.jar"))
     implementation(files("./libs/web-client-starter-0.0.1.jar"))
+    implementation ("com.google.code.gson:gson:2.8.8")
+
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
