@@ -28,13 +28,6 @@ spring:
           filters:
             - AuthenticationFilter
 
-eureka:
-  client:
-    service-url:
-      defaultZone: ${SERVICE_REGISTRY_URL}/eureka
-  instance:
-    prefer-ip-address: true
-
 app:
   env:
     auth-service-base-url: ${AUTH_SERVICE_BASE_URL}
