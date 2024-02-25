@@ -8,21 +8,21 @@ spring:
     gateway:
       routes:
         - id: auth-service
-          uri: lb://AUTH-SERVICE
+          uri: http://auth-service:${AUTH_SERVICE_PORT:9001}
           predicates:
             - Path=/auth/**
           filters:
             - AuthenticationFilter
 
         - id: account-service
-          uri: lb://ACCOUNT-SERVICE
+          uri: http://account-service:${ACCOUNT_SERVICE_PORT:9004}
           predicates:
             - Path=/accounts/**
           filters:
             - AuthenticationFilter
 
         - id: user-service
-          uri: lb://USER-SERVICE
+          uri: http://user-service:${USER_SERVICE_PORT:9005}
           predicates:
             - Path=/users/**
           filters:
